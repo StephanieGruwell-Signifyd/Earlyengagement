@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onboarding Risk — Why Early Engagement Wins</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #003459;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: #fff;
+    }
+
+    .wrapper { width: 100%; max-width: 1400px; }
+
+    /* ── Header ── */
+    .header { margin-bottom: 20px; }
+    .header-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; flex-wrap: wrap; }
+
+    .badge {
+      background: #00A3E0;
+      color: #003459;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    h1 { font-size: 22px; font-weight: 700; color: #fff; white-space: nowrap; }
+
+    .subtitle { color: #9FADBF; font-size: 13px; line-height: 1.5; }
+
+    /* ── Cards grid ── */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: #002540;
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 20px 20px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover { border-color: rgba(255,255,255,0.2); }
+    .card.open { border-color: var(--card-color); }
+
+    .accent-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--card-color);
+    }
+
+    /* ── Card header ── */
+    .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+
+    .icon-box {
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      background: var(--icon-bg);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--card-color);
+      margin-bottom: 2px;
+    }
+
+    .card-title { font-size: 16px; font-weight: 700; color: #fff; }
+
+    .divider { height: 1px; background: rgba(255,255,255,0.07); margin: 12px 0; }
+
+    /* ── Bullets ── */
+    .causes { display: flex; flex-direction: column; gap: 10px; }
+
+    .cause { display: flex; gap: 8px; align-items: flex-start; }
+
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--card-color);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .cause-label { font-weight: 600; font-size: 12px; color: #fff; margin-bottom: 1px; }
+    .cause-desc { font-size: 11px; color: #9FADBF; line-height: 1.45; }
+
+    /* ── Expand toggle ── */
+    .toggle {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--card-color);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      user-select: none;
+    }
+
+    /* ── Expanded detail ── */
+    .detail {
+      display: none;
+      margin-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
+    }
+    .card.open .detail { display: block; }
+
+    .detail-row { margin-bottom: 14px; }
+    .detail-row:last-child { margin-bottom: 0; }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--card-color);
+      margin-bottom: 3px;
+    }
+    .detail-value { font-size: 13px; color: #c8d4e0; line-height: 1.55; }
+
+    /* ── Yellow flag bar ── */
+    .yellow-flag {
+      background: rgba(0,163,224,0.07);
+      border: 1px solid rgba(0,163,224,0.2);
+      border-left: 4px solid #00A3E0;
+      border-radius: 6px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .yellow-flag p { color: #9FADBF; font-size: 12.5px; line-height: 1.6; }
+    .yellow-flag strong.label {
+      color: #00A3E0;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-size: 11px;
+    }
+    .yellow-flag strong.highlight { color: #fff; }
+
+    @media (max-width: 800px) {
+      .cards { grid-template-columns: 1fr; }
+      h1 { font-size: 18px; white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-row">
+      <div class="badge">Merchant Onboarding</div>
+      <h1>Why Early Engagement Wins</h1>
+    </div>
+    <p class="subtitle">Three risks that quietly derail Go Live — act on yellow flags before they turn red.</p>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards">
+
+    <!-- Stakeholder Risk -->
+    <div class="card" id="card-stakeholder" style="--card-color:#E31C79; --icon-bg:rgba(227,28,121,0.12);" onclick="toggle('stakeholder')">
+      <div class="accent-bar"></div>
+      <div class="card-header">
+        <div class="icon-box">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="#E31C79">
+            <path d="M32 6C27.6 6 24 9.6 24 14s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z"/>
+            <path d="M44 28H20c-4.4 0-8 3.6-8 8v4h4v-4c0-2.2 1.8-4 4-4h24c2.2 0 4 1.8 4 4v4h4v-4c0-4.4-3.6-8-8-8z"/>
+            <path d="M32 42l-10 5v5c0 5.5 4.3 9.6 10 10 5.7-.4 10-4.5 10-10v-5l-10-5zm0 3.4l7 3.5v3.1c0 3.6-2.9 6.3-7 6.9-4.1-.6-7-3.3-7-6.9v-3.1l7-3.5z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-label">Leadership &amp; Champion Changes</div>
+          <div class="card-title">Stakeholder Risk</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="causes">
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Layoffs &amp; Restructuring</div><div class="cause-desc">The champions who signed the contract and owned the urgency may no longer be at the company.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Shifting Economic Priorities</div><div class="cause-desc">Remaining leadership is focused on stabilization — Signifyd can slip behind budget scrutiny and internal pivots.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">New Leadership, Lost Buy-In</div><div class="cause-desc">Promotions or external hires bring in stakeholders without the original context. Buy-in has to be rebuilt from scratch.</div></div></div>
+      </div>
+      <div class="toggle" id="toggle-stakeholder">▼ Signals &amp; actions</div>
+      <div class="detail">
+        <div class="detail-row"><div class="detail-label">Impact</div><div class="detail-value">The project loses its internal champion. Without someone who owns the outcome, urgency erodes and Go Live becomes aspirational rather than committed.</div></div>
+        <div class="detail-row"><div class="detail-label">Yellow Flag Signals</div><div class="detail-value">New name appears on invites. Original sponsor goes quiet. Stakeholder asks to revisit the business case or scope.</div></div>
+        <div class="detail-row"><div class="detail-label">Our Move</div><div class="detail-value">Re-sell the value. Treat every new stakeholder as a new champion to earn — walk them through the business case, the contract context, and what's at stake for their business.</div></div>
+        <div class="detail-row"><div class="detail-label">When to Act</div><div class="detail-value">At the first sign of a roster change — before the new stakeholder builds other commitments.</div></div>
+      </div>
+    </div>
+
+    <!-- Technical Resource Risk -->
+    <div class="card" id="card-resources" style="--card-color:#A438A8; --icon-bg:rgba(164,56,168,0.12);" onclick="toggle('resources')">
+      <div class="accent-bar"></div>
+      <div class="card-header">
+        <div class="icon-box">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="#A438A8">
+            <path d="M56 8H8C5.8 8 4 9.8 4 12v32c0 2.2 1.8 4 4 4h20v4H20v4h24v-4H36v-4h20c2.2 0 4-1.8 4-4V12c0-2.2-1.8-4-4-4zm0 34H8V12h48v30z"/>
+            <path d="M20 34l-6-6 6-6 2.8 2.8L19.7 28l3.1 3.2zM44 34l-2.8-2.8 3.1-3.2-3.1-3.2L44 22l6 6zM28 38l4-20 4 1-4 20z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-label">Capacity, Context &amp; Competing Demands</div>
+          <div class="card-title">Technical Resource Risk</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="causes">
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">No Connection to the Business Case</div><div class="cause-desc">Technical teams assigned post-sale weren't in the room when priorities were set — they're executing a ticket, not championing an outcome.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Competing Priorities &amp; Code Freezes</div><div class="cause-desc">Engineering bandwidth shifts to other projects, and predictable freezes like end-of-year become silent timeline killers when not planned around.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Data &amp; Domain Knowledge Gaps</div><div class="cause-desc">If the right SMEs aren't engaged early, gaps in source data understanding surface mid-integration and cause costly delays.</div></div></div>
+      </div>
+      <div class="toggle" id="toggle-resources">▼ Signals &amp; actions</div>
+      <div class="detail">
+        <div class="detail-row"><div class="detail-label">Impact</div><div class="detail-value">Implementation stalls without drama — tasks slip, timelines extend, and no single person is accountable for re-starting momentum.</div></div>
+        <div class="detail-row"><div class="detail-label">Yellow Flag Signals</div><div class="detail-value">Tasks going past due with no update. Vague answers on timelines. Engineers missing calls or deprioritizing Signifyd tickets.</div></div>
+        <div class="detail-row"><div class="detail-label">Our Move</div><div class="detail-value">Ensure stakeholders actively communicate priority to their technical teams. Surface freeze windows early and plan around them. Identify data SMEs before integration begins.</div></div>
+        <div class="detail-row"><div class="detail-label">When to Act</div><div class="detail-value">During kickoff — not after the first missed milestone.</div></div>
+      </div>
+    </div>
+
+    <!-- Timeline Risk -->
+    <div class="card" id="card-timeline" style="--card-color:#00A3E0; --icon-bg:rgba(0,163,224,0.12);" onclick="toggle('timeline')">
+      <div class="accent-bar"></div>
+      <div class="card-header">
+        <div class="icon-box">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="#00A3E0">
+            <path d="M32 10C19.9 10 10 19.9 10 32s9.9 22 22 22 22-9.9 22-22S44.1 10 32 10zm0 40c-9.9 0-18-8.1-18-18s8.1-18 18-18 18 8.1 18 18-8.1 18-18 18z"/>
+            <path d="M33 21h-4v13l9 5.4 2-3.3-7-4.1z"/>
+            <path d="M14.6 10.6L7.4 17l2.8 2.8 7.2-6.4zM49.4 10.6l-2.8 2.8 7.2 6.4 2.8-2.8zM28 6h8v4h-8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-label">Go Live Commitment &amp; Follow-Through</div>
+          <div class="card-title">Timeline Risk</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="causes">
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Soft Go Live Commitment</div><div class="cause-desc">Pre-sales dates are often aspirational. Without a formal re-commitment post-contract, the target becomes a suggestion, not a deadline.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Repeated Date Slippage</div><div class="cause-desc">Each pushed date erodes urgency. A pattern of delays signals a prioritization problem — not just a scheduling one.</div></div></div>
+        <div class="cause"><div class="dot"></div><div><div class="cause-label">Missed Tasks &amp; Slow Engagement</div><div class="cause-desc">When merchants fall behind on their own milestones — configs, test data, looping in the right people — the timeline compresses on their side, not ours.</div></div></div>
+      </div>
+      <div class="toggle" id="toggle-timeline">▼ Signals &amp; actions</div>
+      <div class="detail">
+        <div class="detail-row"><div class="detail-label">Impact</div><div class="detail-value">A delayed Go Live is lost value for the merchant and lost revenue for Signifyd. The longer it takes, the harder it becomes to re-establish urgency.</div></div>
+        <div class="detail-row"><div class="detail-label">Yellow Flag Signals</div><div class="detail-value">Go Live date moves more than once. Merchant tasks routinely missed or handed off. No urgency when rescheduling. Calls hard to get on the calendar.</div></div>
+        <div class="detail-row"><div class="detail-label">Our Move</div><div class="detail-value">Establish a formal Go Live commitment with joint accountability. Review task ownership regularly. Escalate delays early — a slipping task is an early warning, not just an inconvenience.</div></div>
+        <div class="detail-row"><div class="detail-label">When to Act</div><div class="detail-value">At contract signature — then reinforced at every milestone checkpoint.</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Yellow Flag Principle -->
+  <div class="yellow-flag">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00A3E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <p>
+      <strong class="label">Yellow Flag Principle — </strong>
+      Early intervention isn't just about getting the merchant back on track.
+      <strong class="highlight"> It's also our responsibility to communicate early and cross-functionally.</strong>
+      When delays emerge, senior leadership, finance, and operational partners shouldn't be the last to know. Early visibility gives them the ability to partner on solutions, revise forecasting, or reallocate resources — before a yellow flag quietly becomes a missed quarter.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  function toggle(id) {
+    var card = document.getElementById('card-' + id);
+    var toggleEl = document.getElementById('toggle-' + id);
+    var isOpen = card.classList.contains('open');
+    // Close all cards first
+    ['stakeholder','resources','timeline'].forEach(function(r) {
+      document.getElementById('card-' + r).classList.remove('open');
+      document.getElementById('toggle-' + r).textContent = '▼ Signals & actions';
+    });
+    // Open clicked card if it wasn't already open
+    if (!isOpen) {
+      card.classList.add('open');
+      toggleEl.textContent = '▲ Hide detail';
+    }
+  }
+</script>
+</body>
+</html>
